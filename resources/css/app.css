@@ -42,3 +42,36 @@ footer {
     font-size: 1.25rem;
     color: #555;
 }
+
+.background-image {
+    background-image: url('/images/coffee-bg.webp');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Viewport height, making the section fill the entire screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a dark overlay for better text visibility */
+    padding: 0px;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6347; /* Tomato color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #ff4500; /* Darker shade on hover */
+}
+
