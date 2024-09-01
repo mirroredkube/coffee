@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Coffee Shop')</title>
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
     @vite('resources/css/app.css')
 </head>
 <body>
     <header>
-        <h1>Coffee Shop</h1>
+        <div class="logo-container">
+            <a href="/">
+                <img src="{{ asset('images/logo.png') }}" alt="Coffee Shop Logo" class="logo">
+            </a>
+        </div>
         <nav>
             <a href="/">Home</a>
             <a href="/shop">Shop</a>

@@ -2,6 +2,8 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: #f5f5f5;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -14,6 +16,13 @@ nav a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
+}
+
+a {
+    color: inherit; /* Inherit color from parent element */
+    cursor: pointer;
+    text-decoration: none; /* Remove the underline */
+    margin: 10px; /* Add a small margin */
 }
 
 .content {
