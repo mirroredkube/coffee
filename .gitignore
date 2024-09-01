@@ -1,0 +1,45 @@
+# Laravel specific files/folders
+
+/vendor/
+/node_modules/
+/public/storage
+/storage/*.key
+.env
+.env.*.local
+
+# Ignore Mac-specific files
+.DS_Store
+
+# Ignore IDE specific files
+.idea
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+.vscode/
+
+# Ignore Composer and NPM logs and lock files
+composer.lock
+npm-debug.log
+yarn-error.log
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+.pnpm-debug.log*
+
+# Ignore PHPUnit test results
+phpunit.xml
+phpunit.xml.dist
+
+# Ignore cached files and compiled resources
+/public/hot
+/public/build
+/public/mix-manifest.json
+/public/css/*.map
+/public/js/*.map
+
+/storage/app/public
+/storage/debugbar
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage
