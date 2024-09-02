@@ -24,8 +24,8 @@ header {
 }
 
 .logo {
-    width: 150px; /* Set your desired width */
-    height: auto; /* Maintain aspect ratio */
+    width: 100px; /* Set your desired width */
+    height: 100px;
 }
 
 /* Navigation styles */
