@@ -10,19 +10,77 @@ header {
     background: #d48a4f; /* Coffee brown color */
     padding: 10px 0;
     color: white;
+
+    /* Flexbox setup */
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly with space between */
+    align-items: center; /* Centers the content vertically */
+}
+
+/* Logo container */
+.logo-container {
+    margin-right: auto; /* Pushes the logo to the left side */
+    padding-left: 20px; /* Optional: Add padding to the left for spacing */
+}
+
+/* Navigation styles */
+
+.nav-container {
+    flex-grow: 1; /* Allow the nav container to grow and center within the header */
+    display: flex;
+    justify-content: center; /* Center the navigation menu */
+}
+
+nav {
+    display: flex;
+    gap: 20px; /* Space between menu items */
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 15px; /* Space between links in old styling */
+    font-weight: bold;
 }
+
+nav a:hover {
+    color: #f1e4d3; /* Lighter hover color */
+}
+
 
 a {
     color: inherit; /* Inherit color from parent element */
     cursor: pointer;
     text-decoration: none; /* Remove the underline */
     margin: 10px; /* Add a small margin */
+}
+
+.icon {
+    color: #884c1c; /* Set the icon color to your coffee brown theme */
+    font-size: 24px; /* Adjust the size as needed */
+}
+
+
+/* Right-aligned section */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between icons */
+    padding-right: 60px; /* Optional: Add padding to the right for spacing */
+}
+
+.icon-link {
+    color: white;
+    text-decoration: none;
+}
+
+.icon {
+    width: 24px; /* Adjust icon size as needed */
+    height: 24px;
+}
+
+.icon-link:hover .icon {
+    filter: brightness(85%); /* Optional: Darken icons on hover */
 }
 
 .content {
