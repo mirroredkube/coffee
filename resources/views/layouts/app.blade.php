@@ -38,7 +38,7 @@
             <a href="/checkout" class="icon-link">
                 <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
             </a>            
-            <a href="/login" class="icon-link">
+            <a href="{{ route('auth.google') }}" class="icon-link">
                 <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
             </a>
         </div>        

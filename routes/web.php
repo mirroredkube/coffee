@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\Auth\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +38,7 @@ Route::post('/partner', [PartnerController::class, 'submit'])->name('partner.sub
 
 // Define the route for the shop page
 Route::get('/shop', [ShopController::class, 'index']);
+
+// Google Auth
+Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
