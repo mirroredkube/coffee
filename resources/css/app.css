@@ -23,6 +23,11 @@ header {
     padding-left: 20px; /* Optional: Add padding to the left for spacing */
 }
 
+.logo {
+    width: 150px; /* Set your desired width */
+    height: auto; /* Maintain aspect ratio */
+}
+
 /* Navigation styles */
 
 .nav-container {
@@ -425,4 +430,65 @@ p {
     margin: 5px 0;
     color: #555;
     line-height: 1.6;
+}
+
+/* Shop Container */
+.shop-container {
+    padding: 20px;
+}
+
+/* Grid Layout */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 20px; /* Space between items */
+    margin-top: 20px;
+}
+
+/* Shop Item */
+.shop-item {
+    background-color: #f9f9f9; /* Light background for items */
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shop-item img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+.shop-item-info {
+    padding: 15px;
+}
+
+.shop-item-info h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.shop-item-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.price {
+    font-weight: bold;
+    color: #333;
+}
+
+.btn-add-to-cart {
+    background-color: #d48a4f; /* Coffee brown color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #b97a3f; /* Slightly darker shade for hover effect */
 }

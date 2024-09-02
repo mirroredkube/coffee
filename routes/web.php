@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ShopController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,3 +34,6 @@ Route::post('/contact/submit', [ContactController::class, 'submit'])->name('cont
 
 Route::get('/partner', [PartnerController::class, 'show'])->name('partner.show');
 Route::post('/partner', [PartnerController::class, 'submit'])->name('partner.submit');
+
+// Define the route for the shop page
+Route::get('/shop', [ShopController::class, 'index']);

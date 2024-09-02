@@ -13,7 +13,7 @@
     <header>
         <div class="logo-container">
             <a href="/">
-                <img src="{{ asset('images/logo.png') }}" alt="Coffee Shop Logo" class="logo">
+                <img src="{{ asset('images/logo.gif') }}" alt="Euro Coffee Logo" class="logo">
             </a>
         </div>
         <div class="nav-container">
