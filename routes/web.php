@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PartnerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +30,6 @@ Route::get('/contact', function () {
 });
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::get('/partner', [PartnerController::class, 'show'])->name('partner.show');
+Route::post('/partner', [PartnerController::class, 'submit'])->name('partner.submit');
