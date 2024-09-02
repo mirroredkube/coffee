@@ -60,6 +60,55 @@ a {
     font-size: 24px; /* Adjust the size as needed */
 }
 
+/* Dropdown menu container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button styling */
+.dropbtn {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #d48a4f; /* Coffee brown color */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Dropdown links */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Hover effects */
+.dropdown-content a:hover {
+    background-color: #b3733e; /* Darker coffee brown */
+}
+
+/* Show the dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Show dropdown button color change on hover */
+.dropdown:hover .dropbtn {
+    color: #f1f1f1;
+}
+
+
 
 /* Right-aligned section */
 .header-right {

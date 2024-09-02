@@ -19,26 +19,28 @@
         <div class="nav-container">
             <nav>
                 <a href="/">Home</a>
-                <a href="/shop">Shop</a>
+                <div class="dropdown">
+                    <a href="/shop" class="dropbtn">Shop <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/shop">Coffee</a>
+                        <a href="/shop">Accessories</a>
+                        <a href="/shop">Machines</a>
+                        <a href="/shop">Cutlery</a>
+                        <a href="/shop">Cleaning Material</a>
+                    </div>
+                </div>
                 <a href="/about">About Us</a>
                 <a href="/partner">B2B Partner Program</a>
                 <a href="/contact">Contact</a>
             </nav>
         </div>
         <div class="header-right">
-<!--             <a href="/login" class="icon-link">
-                <img src="{{ asset('images/login-icon.png') }}" alt="Login Icon" class="icon">
-            </a>
             <a href="/checkout" class="icon-link">
-                <img src="{{ asset('images/cart-icon.png') }}" alt="Shopping Cart Icon" class="icon">
-            </a> -->
+                <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
+            </a>            
             <a href="/login" class="icon-link">
                 <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
             </a>
-            <a href="/checkout" class="icon-link">
-                <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
-            </a>
-
         </div>        
     </header>
 
