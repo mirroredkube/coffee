@@ -22,7 +22,7 @@ class CheckoutController extends Controller
         }
 
         // Return the checkout view with the cart data
-        return view('checkout.index', compact('cart', 'total'));
+        return view('cart', compact('cart', 'total'));
     }
 
     public function process(Request $request)

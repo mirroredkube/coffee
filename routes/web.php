@@ -65,9 +65,6 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 // Route to view the cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
-// Route to show the checkout page
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-
 // Route to process the checkout
-Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::post('/cart', [CartController::class, 'process'])->name('checkout.process');
 

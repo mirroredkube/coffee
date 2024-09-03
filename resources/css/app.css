@@ -496,6 +496,24 @@ p {
     color: #333;
 }
 
+.item-quantity {
+    width: 60px;
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #c2a476; /* Coffee color tone */
+    border-radius: 5px;
+    background-color: #f3ece7; /* Light coffee background color */
+    color: #5e3a23; /* Darker coffee color for text */
+    text-align: center;
+    margin-right: 10px;
+}
+
+.item-quantity:focus {
+    outline: none;
+    border-color: #8b5a33; /* Slightly darker shade for focus */
+    box-shadow: 0 0 5px rgba(139, 90, 51, 0.5); /* Soft shadow */
+}
+
 .btn-add-to-cart {
     background-color: #d48a4f; /* Coffee brown color */
     color: white;
