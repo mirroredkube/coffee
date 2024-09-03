@@ -9,7 +9,7 @@
         @if(session('error'))
             <p class="alert alert-danger">{{ session('error') }}</p>
         @endif
-        <form action="{{ route('checkout.process') }}" method="POST">
+        <form action="{{ route('cart.process') }}" method="POST">
             @csrf
             <ul>
                 @foreach(session('cart') as $id => $item)
@@ -27,9 +27,30 @@
             <div class="cart-total">
                 <h3>Overall Total: ${{ number_format($total, 2) }}</h3>
             </div>
-<!--             <button type="submit" class="btn">Proceed to Payment</button>
- -->            <a href="/" class="btn">Proceed to Payment</a>
+
+            <!-- Add Stripe elements -->
+            <div class="form-row">
+                <label for="card-element">
+                    Credit or debit card
+                </label>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+
+            <button type="submit" class="btn">Proceed to Payment</button>
         </form>
     </div>
 </div>
+
+<!-- Add Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripeKey = "{{ env('STRIPE_KEY') }}";
+</script>
+@vite('resources/js/stripe.js')
+
 @endsection

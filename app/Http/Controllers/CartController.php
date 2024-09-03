@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class CartController extends Controller
 {
@@ -63,11 +65,32 @@ class CartController extends Controller
 
     public function process(Request $request)
     {
-        // Here you would handle the payment processing using Stripe or another payment gateway
+        // Set Stripe API key
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // For now, let's just clear the cart and pretend it was successful
-        session()->forget('cart');
+        // Retrieve the cart from the session
+        $cart = session()->get('cart', []);
+        $total = 0;
 
-        return redirect()->route('shop')->with('success', 'Thank you for your purchase!');
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        try {
+            // Create the charge on Stripe's servers
+            $charge = Charge::create([
+                'amount' => $total * 100, // Amount in cents
+                'currency' => 'usd',
+                'source' => $request->stripeToken, // Token from Stripe.js
+                'description' => 'Order payment',
+            ]);
+
+            // Clear the cart
+            session()->forget('cart');
+
+            return redirect()->route('shop')->with('success', 'Payment successful! Thank you for your purchase!');
+        } catch (\Exception $e) {
+            return redirect()->route('cart.index')->with('error', 'Payment failed! ' . $e->getMessage());
+        }
     }
 }

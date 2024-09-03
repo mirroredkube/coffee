@@ -7,7 +7,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,5 +66,5 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 // Route to process the checkout
-Route::post('/cart', [CartController::class, 'process'])->name('checkout.process');
+Route::post('/cart', [CartController::class, 'process'])->name('cart.process');
 

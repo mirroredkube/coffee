@@ -335,7 +335,7 @@ p {
 
 /* Submit button styling */
 .btn-submit {
-    background-color: #d48a4f; /* Coffee brown color */
+    background-color: #ff6f61; /* Coffee brown color */
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -346,7 +346,7 @@ p {
 }
 
 .btn-submit:hover {
-    background-color: #b3733e; /* Darker coffee brown */
+    background-color: #ff3f2f; /* Darker coffee brown */
 }
 
 /* Background for the Partner Page */
