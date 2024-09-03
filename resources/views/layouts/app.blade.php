@@ -38,9 +38,19 @@
             <a href="/checkout" class="icon-link">
                 <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
             </a>            
-            <a href="{{ route('auth.google') }}" class="icon-link">
-                <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
-            </a>
+            
+            @if (\Illuminate\Support\Facades\Auth::check())
+                        @php
+                            $initials = getInitials(\Illuminate\Support\Facades\Auth::user()->name);
+                        @endphp
+                        <a href="/login" class="user-initials-circle">
+                            {{ $initials }}
+                        </a>
+            @else
+                <a href="/login" class="icon-link">
+                    <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
+                </a>
+            @endif
         </div>        
     </header>
 

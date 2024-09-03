@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,19 @@ Route::get('/partner', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+// Login Page Route
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/login', function () {
+    if (Auth::check()) {
+        // Redirect to the intended page if it exists, or default to the homepage ("/")
+        return redirect()->intended('/')->with('status', 'You\'re already logged in!');
+    }
+    return view('login');
+})->name('login');
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
