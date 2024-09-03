@@ -37,6 +37,7 @@
         <div class="header-right">
             <a href="/cart" class="icon-link">
                 <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
+                <span class="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span>
             </a>            
             
             @if (\Illuminate\Support\Facades\Auth::check())

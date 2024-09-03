@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="about-background">
-    <div class="checkout-container">
+    <div class="cart-container">
         <h2>Checkout</h2>
         @if(session('error'))
             <p class="alert alert-danger">{{ session('error') }}</p>
@@ -27,7 +27,8 @@
             <div class="cart-total">
                 <h3>Overall Total: ${{ number_format($total, 2) }}</h3>
             </div>
-            <button type="submit" class="btn-submit-checkout">Proceed to Payment</button>
+<!--             <button type="submit" class="btn">Proceed to Payment</button>
+ -->            <a href="/" class="btn">Proceed to Payment</a>
         </form>
     </div>
 </div>

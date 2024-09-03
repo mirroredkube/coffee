@@ -121,9 +121,27 @@ a {
     padding-right: 60px; /* Optional: Add padding to the right for spacing */
 }
 
+.cart-count {
+    position: absolute;
+    top: -10px; /* Adjust this value to move the badge vertically */
+    right: -10px; /* Adjust this value to move the badge horizontally */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    display: inline-block;
+    min-width: 20px; /* Ensure the badge has a minimum size */
+    text-align: center; /* Center the text */
+}
+
 .icon-link {
     color: white;
     text-decoration: none;
+    position: relative;
+    display: inline-block;
 }
 
 .icon {
@@ -562,6 +580,10 @@ p {
     padding-bottom: 10px;
 }
 
+.cart-item p {
+    color: #2c0909;
+}
+
 .btn-checkout {
     display: inline-block;
     margin-top: 20px;
@@ -588,5 +610,5 @@ p {
 
 .cart-total h3 {
     margin: 0;
-    color: #333;
+    color: #2c0909;
 }

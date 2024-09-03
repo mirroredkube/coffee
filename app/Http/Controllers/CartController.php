@@ -35,7 +35,11 @@ class CartController extends Controller
         // Save the cart back to the session
         session()->put('cart', $cart);
 
-        return redirect()->back()->with('success', 'Product added to cart!');
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'cartCount' => count($cart)]);
+        } else {
+            return redirect()->back()->with('success', 'Product added to cart!');
+        }
     }
 
     public function index()
