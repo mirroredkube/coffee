@@ -497,11 +497,33 @@ p {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
+    width: 40px;  /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
     border-radius: 50%;
-    background-color: #ff6347; /* Tomato color */
-    color: #fff; /* Text color */
-    font-size: 16px; /* Adjust font size */
+    background-color: #884c1c; /* Set the icon color to your coffee brown theme */
+    color: white;
+    font-size: 16px;
     font-weight: bold;
+    position: relative;
+    cursor: pointer;
+}
+
+.user-initials-circle::after {
+    content: attr(data-fullname);
+    position: absolute;
+    top: 100%; /* Position tooltip below the circle */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10; /* Ensure tooltip is on top of other elements */
+}
+.user-initials-circle:hover::after {
+    opacity: 1;
 }

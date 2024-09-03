@@ -41,9 +41,10 @@
             
             @if (\Illuminate\Support\Facades\Auth::check())
                         @php
+                            $user = \Illuminate\Support\Facades\Auth::user();
                             $initials = getInitials(\Illuminate\Support\Facades\Auth::user()->name);
                         @endphp
-                        <a href="/login" class="user-initials-circle">
+                        <a href="/login" data-fullname="{{ $user->name }}" class="user-initials-circle">
                             {{ $initials }}
                         </a>
             @else
