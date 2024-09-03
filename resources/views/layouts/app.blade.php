@@ -35,7 +35,7 @@
             </nav>
         </div>
         <div class="header-right">
-            <a href="/checkout" class="icon-link">
+            <a href="/cart" class="icon-link">
                 <i class="fas fa-shopping-cart icon"></i> <!-- Font Awesome Cart Icon -->
             </a>            
             

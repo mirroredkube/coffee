@@ -16,12 +16,16 @@
                         <h3>{{ $product->name }}</h3>
                         <p>{{ $product->description }}</p>
                         <p class="price">${{ number_format($product->price, 2) }}</p>
-                        <button class="btn-add-to-cart">Add to Cart</button>
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="number" name="quantity" value="1" min="1" required>
+                            <button type="submit" class="btn-add-to-cart">Add to Cart</button>
+                        </form>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
 </div>
-
 @endsection

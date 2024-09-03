@@ -6,6 +6,8 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,3 +58,16 @@ Route::get('/shop', [ShopController::class, 'index']);
 // Google Auth
 Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
+// Route to add an item to the cart
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
+// Route to view the cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+// Route to show the checkout page
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// Route to process the checkout
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+
