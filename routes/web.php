@@ -18,9 +18,7 @@ Route::get('/', function () {
     return view('hello', ['name' => $name]);
 }); */
 
-Route::get('/shop', function () {
-    return view('shop');
-});
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
 Route::get('/about', function () {
     return view('about');
@@ -67,4 +65,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 // Route to process the checkout
 Route::post('/cart', [CartController::class, 'process'])->name('cart.process');
+
+// Route to delete an item in the cart
+Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
 

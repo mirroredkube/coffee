@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Stripe\Stripe;
 use Stripe\Charge;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -50,11 +51,12 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $total = 0;
 
-        // If the cart is empty, redirect back with an error
-        if (empty($cart)) {
-            return redirect()->route('cart')->with('error', 'Your cart is empty.');
-        }
+        // If the cart is empty, redirect to another route with an error message
+/*         if (empty($cart)) {
+            return redirect()->route('shop')->with('error', 'Your cart is empty.');
+        } */
 
+        // Calculate the total price
         foreach ($cart as $id => $item) {
             $total += $item['price'] * $item['quantity'];
         }
@@ -92,5 +94,28 @@ class CartController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('cart.index')->with('error', 'Payment failed! ' . $e->getMessage());
         }
+    }
+
+    public function remove($id)
+    {
+        // Get the cart from session
+        $cart = session()->get('cart', []);
+
+        // Log the cart and the item to be removed
+        Log::info('Cart before removal', ['cart' => $cart]);
+        Log::info('Removing item ID', ['id' => $id]);
+
+        // Remove the item if it exists in the cart
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+
+            // Log the cart after removal
+            Log::info('Cart after removal', ['cart' => session()->get('cart')]);
+
+            return redirect()->back()->with('success', 'Item removed from cart.');
+        }
+
+        return redirect()->back()->with('error', 'Item not found in cart.');
     }
 }
