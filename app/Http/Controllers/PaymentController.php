@@ -7,6 +7,9 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Session as FlashSession;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -62,9 +65,44 @@ class PaymentController extends Controller
 
     public function success()
     {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        if (!$user) {
+            session()->flash('error', 'User not authenticated. Please log in.');
+            return redirect('/login');
+        }
+
+        // Get cart items from session
+        $cartItems = session('cart', []);
+
+        if (empty($cartItems)) {
+            session()->flash('error', 'Your cart is empty. Unable to process the order.');
+            return redirect('/');
+        }
+
+        // Calculate total
+        $total = array_sum(array_map(function ($item) {
+            return $item['price'] * $item['quantity'];
+        }, $cartItems));
+
+        // Create order object
+        $order = [
+            'user_email' => $user->email,
+            'user_name' => $user->name,
+            'items' => $cartItems,
+            'total' => $total,
+            'order_date' => now()->toDateTimeString(),
+        ];
+
+        // Send invoice email
+        Log::info('Attempting to send email to: ' . $user->email);
+        Mail::to($user->email)->send(new InvoiceMail($order));
+        Log::info('Email sent successfully');
+
         // Clear the cart after successful payment
         session()->forget('cart');
-        
+
         FlashSession::flash('success', 'Payment successful! Your order has been placed.');
         return redirect('/');
     }

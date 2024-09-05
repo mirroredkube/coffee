@@ -101,9 +101,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('payment-form');
         const button = document.getElementById('proceed-to-payment');
-        const debugInfo = document.getElementById('debug-info');
 
-        if (form && button && debugInfo) {
+        if (form && button) {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
                 console.log('Button clicked');
@@ -120,7 +119,7 @@
                 debugInfo.innerHTML += '<p>Form submitted at ' + new Date().toLocaleString() + '</p>';
             });
         } else {
-            console.error('One or more elements not found:', { form, button, debugInfo });
+            console.error('One or more elements not found:', { form, button });
         }
     });
 </script>

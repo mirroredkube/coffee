@@ -28,43 +28,40 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function handleGoogleCallback()
-{
-    try {
-        $googleUser = Socialite::driver('google')->user();
-        
-        // Log the raw user data
-        Log::info('Google User Data: ', [
-            'id' => $googleUser->id ?? 'null',
-            'name' => $googleUser->name ?? 'null',
-            'email' => $googleUser->email ?? 'null'
-        ]);
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
 
-        // Find the user by email
-        $user = User::where('email', $googleUser->email)->first();
-
-        if ($user) {
-            // If the user already exists, log them in
-            Auth::login($user);
-        } else {
-            // If the user does not exist, create a new one
-            $newUser = User::create([
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'google_id' => $googleUser->id,
-                'password' => encrypt('123456dummy')
+            // Log the raw user data
+            Log::info('Google User Data: ', [
+                'id' => $googleUser->id ?? 'null',
+                'name' => $googleUser->name ?? 'null',
+                'email' => $googleUser->email ?? 'null'
             ]);
 
-            Auth::login($newUser);
+            // Find the user by email
+            $user = User::where('email', $googleUser->email)->first();
+
+            if ($user) {
+                // If the user already exists, log them in
+                Auth::login($user);
+            } else {
+                // If the user does not exist, create a new one
+                $newUser = User::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'google_id' => $googleUser->id,
+                    'password' => encrypt('123456dummy')
+                ]);
+
+                Auth::login($newUser);
+            }
+
+            return redirect()->intended('shop');
+        } catch (Exception $e) {
+            Log::error('Error during Google callback: ' . $e->getMessage());
+            return redirect('/login')->withErrors('Something went wrong. Please try again.');
         }
-
-        return redirect()->intended('shop');
-    } catch (Exception $e) {
-        Log::error('Error during Google callback: ' . $e->getMessage());
-        return redirect('/login')->withErrors('Something went wrong. Please try again.');
     }
-}
-
-    
-    
 
 }
