@@ -106,7 +106,6 @@
             button.addEventListener('click', function (e) {
                 e.preventDefault();
                 console.log('Button clicked');
-                debugInfo.innerHTML += '<p>Button clicked at ' + new Date().toLocaleString() + '</p>';
 
                 // Submit the form after a short delay
                 setTimeout(() => {
@@ -116,7 +115,6 @@
 
             form.addEventListener('submit', function (e) {
                 console.log('Form submitted');
-                debugInfo.innerHTML += '<p>Form submitted at ' + new Date().toLocaleString() + '</p>';
             });
         } else {
             console.error('One or more elements not found:', { form, button });
