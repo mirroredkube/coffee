@@ -24,7 +24,7 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         // Check if the product is already in the cart
-        if(isset($cart[$product->id])) {
+        if (isset($cart[$product->id])) {
             $cart[$product->id]['quantity'] += $request->quantity;
         } else {
             $cart[$product->id] = [
@@ -61,7 +61,7 @@ class CartController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
-        // Return the checkout view with the cart data
+        // Return the cart view with the cart data
         return view('cart', compact('cart', 'total'));
     }
 
@@ -110,12 +110,22 @@ class CartController extends Controller
             unset($cart[$id]);
             session()->put('cart', $cart);
 
+            // Calculate new total
+            $newTotal = array_reduce($cart, function ($carry, $item) {
+                return $carry + ($item['price'] * $item['quantity']);
+            }, 0);
+
             // Log the cart after removal
             Log::info('Cart after removal', ['cart' => session()->get('cart')]);
 
-            return redirect()->back()->with('success', 'Item removed from cart.');
+            return response()->json([
+                'success' => true,
+                'message' => 'Item removed from cart.',
+                'newTotal' => $newTotal
+            ]);
         }
 
-        return redirect()->back()->with('error', 'Item not found in cart.');
+        return response()->json(['success' => false, 'message' => 'Item not found in cart.']);
     }
+
 }

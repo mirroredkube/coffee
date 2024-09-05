@@ -6,75 +6,45 @@
 <div class="about-background">
     <div class="cart-container">
         <h2>Checkout</h2>
-        
+
         @if(session('cart') && count(session('cart')) > 0)
             <!-- Cart is not empty -->
             @if(session('error'))
                 <p class="alert alert-danger">{{ session('error') }}</p>
             @endif
 
-            <form id="payment-form" action="{{ route('cart.process') }}" method="POST">
+            <form id="payment-form" action="{{ route('payment.checkout') }}" method="POST">
                 @csrf
                 <ul>
-                @foreach(session('cart') as $id => $item)
-                    <script>
-                        console.log("id: {{ $id }}");
-                    </script>
-                    <li class="cart-item">
-                        <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3>{{ $item['name'] }}</h3>
-                            <p>Quantity: {{ $item['quantity'] }}</p>
-                            <p>Price per item: ${{ number_format($item['price'], 2) }}</p>
-                            <p>Total for this item: ${{ number_format($item['price'] * $item['quantity'], 2) }}</p>
-                        </div>
-                        <form action="{{ route('cart.remove', ['id' => $id]) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-submit btn-danger">
+                    @foreach(session('cart') as $id => $item)
+                        <li class="cart-item">
+                            <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}"
+                                class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h3>{{ $item['name'] }}</h3>
+                                <p>Quantity: {{ $item['quantity'] }}</p>
+                                <p>Price per item: ${{ number_format($item['price'], 2) }}</p>
+                                <p>Total for this item: ${{ number_format($item['price'] * $item['quantity'], 2) }}</p>
+                            </div>
+                            <button type="button" class="btn-submit btn-danger remove-item" data-id="{{ $id }}">
                                 <i class="fa fa-trash"></i>
                                 <span class="sr-only">Remove item</span>
                             </button>
-                        </form>
-                    </li>
-                @endforeach
+                        </li>
+                    @endforeach
                 </ul>
+
                 <div class="cart-total">
-                    <h3>Overall Total: ${{ number_format($total, 2) }}</h3>
+                    <h3>Overall Total: $<span id="cart-total">{{ number_format($total, 2) }}</span></h3>
                 </div>
-
-                <!-- Payment Method Selection -->
-                <!--
-                <div class="form-row">
-                    <label>
-                        <input type="radio" name="payment-method" value="card" checked>
-                        Credit or debit card
-                    </label>
-                    <label>
-                        <input type="radio" name="payment-method" value="sepa">
-                        SEPA Direct Debit
-                    </label>
-                </div>
-
-                <!-- Stripe elements -->
-                <!--
-                <div class="form-row" id="card-container">
-                    <div id="card-element">
-                        <!-- A Stripe Element will be inserted here. -->
-                <!--    </div>
-                    <div id="card-errors" role="alert"></div>
-                </div>
-
-                <div class="form-row" id="sepa-container" style="display: none;">
-                    <div id="sepa-element">
-                        <!-- A SEPA Element will be inserted here. -->
-                 <!--   </div>
-                    <div id="sepa-errors" role="alert"></div>
-                </div>
-                -->
-
-                <button type="submit" class="btn-submit">Proceed to Payment</button>
+                <button type="submit" class="btn-submit" id="proceed-to-payment">Proceed to Payment</button>
             </form>
+
+            <div id="debug-info" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0;">
+                <h3>Debug Information:</h3>
+                <p>Form Action: {{ route('payment.checkout') }}</p>
+                <p>CSRF Token: {{ csrf_token() }}</p>
+            </div>
         @else
             <!-- Cart is empty -->
             <p>Your cart is currently empty. Please add some items to your cart before proceeding to checkout.</p>
@@ -82,10 +52,82 @@
     </div>
 </div>
 
-<!-- Add Stripe.js -->
-<!-- <script src="https://js.stripe.com/v3/"></script>
 <script>
-    var stripeKey = "{{ config('services.stripe.key') }}";
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('payment-form');
+        const removeButtons = document.querySelectorAll('.remove-item');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const itemId = this.getAttribute('data-id');
+                removeItem(itemId);
+            });
+        });
+
+        function removeItem(id) {
+            fetch(`/cart/remove/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // If successful, remove the item from the DOM
+                        const itemElement = document.querySelector(`.remove-item[data-id="${id}"]`).closest('.cart-item');
+                        itemElement.remove();
+                        console.log(data.message); // Log success message
+                        // Update the cart total
+                        updateCartTotal(data.newTotal);
+                    } else {
+                        // If an error is returned, then show the alert
+                        alert(data.message || 'Failed to remove item');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while removing the item');
+                });
+        }
+
+        function updateCartTotal(newTotal) {
+            const totalElement = document.getElementById('cart-total');
+            if (totalElement) {
+                totalElement.textContent = newTotal.toFixed(2);
+            } else {
+                console.error('Cart total element not found');
+            }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('payment-form');
+        const button = document.getElementById('proceed-to-payment');
+        const debugInfo = document.getElementById('debug-info');
+
+        if (form && button && debugInfo) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log('Button clicked');
+                debugInfo.innerHTML += '<p>Button clicked at ' + new Date().toLocaleString() + '</p>';
+
+                // Submit the form after a short delay
+                setTimeout(() => {
+                    form.submit();
+                }, 100);
+            });
+
+            form.addEventListener('submit', function (e) {
+                console.log('Form submitted');
+                debugInfo.innerHTML += '<p>Form submitted at ' + new Date().toLocaleString() + '</p>';
+            });
+        } else {
+            console.error('One or more elements not found:', { form, button, debugInfo });
+        }
+    });
 </script>
-@vite('resources/js/stripe.js') -->
 @endsection

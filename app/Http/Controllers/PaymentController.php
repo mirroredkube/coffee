@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Session as FlashSession;
+use Illuminate\Support\Facades\Log;
+
+class PaymentController extends Controller
+{
+    public function checkout(Request $request)
+    {
+        Log::info("Inside payment checkout process method");
+        Log::info("Checkout method called");
+        Log::info("Request data: " . json_encode($request->all()));
+        try {
+            // Set the Stripe secret key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            // Get cart items from session
+            $cartItems = session('cart', []);
+
+            if (empty($cartItems)) {
+                return back()->with('error', 'Your cart is empty. Please add items before proceeding to checkout.');
+            }
+
+            // Prepare line items for Stripe
+            $lineItems = [];
+            foreach ($cartItems as $item) {
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => $item['name'],
+                        ],
+                        'unit_amount' => intval($item['price'] * 100), // Convert to cents
+                    ],
+                    'quantity' => $item['quantity'],
+                ];
+            }
+
+            // Create the Checkout Session
+            $session = Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => route('payment.success'),
+                'cancel_url' => route('payment.cancel'),
+            ]);
+
+            // Redirect to Stripe Checkout Page
+            return redirect($session->url, 303);
+        } catch (\Exception $e) {
+            Log::error('Stripe error: ' . $e->getMessage());
+            return back()->with('error', 'An error occurred while processing your payment. Please try again.');
+        }
+    }
+
+    public function success()
+    {
+        // Clear the cart after successful payment
+        session()->forget('cart');
+        
+        FlashSession::flash('success', 'Payment successful! Your order has been placed.');
+        return redirect('/');
+    }
+
+    public function cancel()
+    {
+        FlashSession::flash('error', 'Payment canceled. Your cart items have been retained.');
+        return redirect('/cart');
+    }
+}

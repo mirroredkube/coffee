@@ -7,6 +7,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::get('/', function () {
@@ -63,9 +64,10 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 // Route to view the cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
-// Route to process the checkout
-Route::post('/cart', [CartController::class, 'process'])->name('cart.process');
-
 // Route to delete an item in the cart
-Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
+// Payment related
+Route::post('/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
