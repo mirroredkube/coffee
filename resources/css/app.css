@@ -630,3 +630,28 @@ p {
     margin: 0;
     color: #2c0909;
 }
+
+.coffee-theme-alert {
+    background-color: #6F4E37; /* Coffee brown */
+    color: #FFF8DC; /* Cream color for text */
+    padding: 15px;
+    border-radius: 5px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 300px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #FFF8DC;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+}

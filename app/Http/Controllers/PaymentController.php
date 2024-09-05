@@ -17,7 +17,9 @@ class PaymentController extends Controller
         Log::info("Request data: " . json_encode($request->all()));
         try {
             // Set the Stripe secret key
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe::setApiKey(config('services.stripe.secret'));
+
+            Log::info("Stripe API Key: " . substr(config('services.stripe.secret'), 0, 8) . '...');
 
             // Get cart items from session
             $cartItems = session('cart', []);

@@ -45,8 +45,8 @@
             
             @if (\Illuminate\Support\Facades\Auth::check())
                         @php
-                            $user = \Illuminate\Support\Facades\Auth::user();
-                            $initials = getInitials(\Illuminate\Support\Facades\Auth::user()->name);
+    $user = \Illuminate\Support\Facades\Auth::user();
+    $initials = getInitials(\Illuminate\Support\Facades\Auth::user()->name);
                         @endphp
                         <a href="/login" data-fullname="{{ $user->name }}" class="user-initials-circle">
                             {{ $initials }}
@@ -60,11 +60,36 @@
     </header>
 
     <div class="content">
+        @if(session('success'))
+            <div id="success-alert" class="alert alert-success coffee-theme-alert">
+                <span>{{ session('success') }}</span>
+                <button type="button" class="close-btn" onclick="closeAlert()">&times;</button>
+            </div>
+        @endif
         @yield('content')
     </div>
 
     <footer>
         <p>&copy; {{ date('Y') }} Coffee Shop. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Function to close the alert
+        function closeAlert() {
+            document.getElementById('success-alert').style.display = 'none';
+        }
+
+        // Auto-disappear after 5 seconds
+        setTimeout(function () {
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 1s';
+                setTimeout(function () {
+                    alert.style.display = 'none';
+                }, 1000);
+            }
+        }, 5000);
+    </script>
 </body>
 </html>

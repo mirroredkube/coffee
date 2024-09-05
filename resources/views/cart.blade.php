@@ -39,12 +39,6 @@
                 </div>
                 <button type="submit" class="btn-submit" id="proceed-to-payment">Proceed to Payment</button>
             </form>
-
-            <div id="debug-info" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0;">
-                <h3>Debug Information:</h3>
-                <p>Form Action: {{ route('payment.checkout') }}</p>
-                <p>CSRF Token: {{ csrf_token() }}</p>
-            </div>
         @else
             <!-- Cart is empty -->
             <p>Your cart is currently empty. Please add some items to your cart before proceeding to checkout.</p>
