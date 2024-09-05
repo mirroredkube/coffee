@@ -69,11 +69,41 @@
         @yield('content')
     </div>
 
+    <div id="custom-context-menu" class="custom-context-menu" style="display: none;">
+        <ul>
+            <li><a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+        </ul>
+    </div>
+    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <footer>
         <p>&copy; {{ date('Y') }} Coffee Shop. All rights reserved.</p>
     </footer>
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const userInitialsCircle = document.querySelector('.user-initials-circle');
+            const customContextMenu = document.getElementById('custom-context-menu');
+
+            if (userInitialsCircle) {
+                userInitialsCircle.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                    customContextMenu.style.display = 'block';
+                    customContextMenu.style.left = e.pageX + 'px';
+                    customContextMenu.style.top = e.pageY + 'px';
+                });
+
+                document.addEventListener('click', function () {
+                    customContextMenu.style.display = 'none';
+                });
+            }
+        });
+
         // Function to close the alert
         function closeAlert() {
             document.getElementById('success-alert').style.display = 'none';

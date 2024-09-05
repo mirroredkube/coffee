@@ -57,6 +57,7 @@ Route::get('/shop', [ShopController::class, 'index']);
 // Google Auth
 Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route to add an item to the cart
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');

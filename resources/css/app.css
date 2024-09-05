@@ -655,3 +655,33 @@ p {
     cursor: pointer;
     padding: 0 5px;
 }
+
+.custom-context-menu {
+    position: absolute;
+    background-color: #6F4E37; /* Coffee brown background */
+    border: 1px solid #4B3B2A; /* Darker brown border */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.custom-context-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-context-menu ul li {
+    padding: 8px 12px; /* Padding for the list items */
+}
+
+.custom-context-menu ul li a {
+    display: block;
+    text-decoration: none;
+    color: #FFF8DC; /* Cream color for text */
+}
+
+.custom-context-menu ul li a:hover {
+    background-color: #4B3B2A; /* Darker brown on hover */
+    color: #FFF8DC; /* Keep text color cream on hover */
+}
