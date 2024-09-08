@@ -37,7 +37,12 @@
                 <div class="cart-total">
                     <h3>Overall Total: $<span id="cart-total">{{ number_format($total, 2) }}</span></h3>
                 </div>
-                <button type="submit" class="btn-submit" id="proceed-to-payment">Proceed to Payment</button>
+
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    <button type="submit" class="btn-submit" id="proceed-to-payment">Proceed to Payment</button>
+                @else
+                    <button type="button" class="btn-submit" id="login-button">Login to proceed to checkout</button>
+                @endif
             </form>
         @else
             <!-- Cart is empty -->
@@ -101,8 +106,16 @@
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('payment-form');
         const button = document.getElementById('proceed-to-payment');
+        const loginButton = document.getElementById('login-button');
 
-        if (form && button) {
+        if (loginButton) {
+            loginButton.addEventListener('click', function () {
+                console.log('Login Button clicked');
+                window.location.href = '{{ route("login") }}';
+            });
+        }
+ 
+        else if (form && button) {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
                 console.log('Button clicked');
@@ -117,7 +130,7 @@
                 console.log('Form submitted');
             });
         } else {
-            console.error('One or more elements not found:', { form, button });
+            console.error('One or more required elements not found:', { form, button, loginButton });
         }
     });
 </script>
