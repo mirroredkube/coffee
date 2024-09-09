@@ -36,7 +36,7 @@ USER appuser
 COPY --chown=appuser:appuser . .
 
 # Ensure necessary paths exist, and set permissions
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/resources/views \
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
     && chown -R appuser:appuser storage bootstrap/cache resources/views \
     && chmod -R 775 storage bootstrap/cache resources/views
 
@@ -45,8 +45,7 @@ RUN composer install
 
 # Optimize Laravel application
 RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+    && php artisan route:cache 
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
