@@ -6,6 +6,7 @@ WORKDIR /var/www/html
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
+    nginx \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -46,7 +47,7 @@ RUN composer install
 # Optimize Laravel application
 RUN php artisan config:cache \
     && php artisan route:cache 
-    
+
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
