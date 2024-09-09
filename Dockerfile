@@ -41,6 +41,10 @@ RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
     && chown -R appuser:appuser storage bootstrap/cache resources/views \
     && chmod -R 775 storage bootstrap/cache resources/views
 
+# Create required directories for Nginx
+RUN mkdir -p /var/lib/nginx /var/lib/nginx/body \
+    && chown -R www-data:www-data /var/lib/nginx    
+
 # Install Laravel dependencies
 RUN composer install
 
