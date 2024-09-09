@@ -46,9 +46,12 @@ RUN composer install
 # Optimize Laravel application
 RUN php artisan config:cache \
     && php artisan route:cache 
+    
+# Configure Nginx
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
+# Expose port 80 for Nginx
+EXPOSE 80
 
-# Start PHP-FPM server
-CMD ["php-fpm"]
+# Start Nginx and PHP-FPM
+CMD service nginx start && php-fpm
