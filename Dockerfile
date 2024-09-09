@@ -35,6 +35,11 @@ USER appuser
 # Copy the local code to the container
 COPY --chown=appuser:appuser . .
 
+# Ensure cache path and permissions are set
+RUN mkdir -p /var/www/html/bootstrap/cache \
+    && chown -R appuser:appuser storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
 # Install Laravel dependencies
 RUN composer install
 
@@ -42,4 +47,4 @@ RUN composer install
 EXPOSE 9000
 
 # Start PHP-FPM server
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD ["php-fpm"]
