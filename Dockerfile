@@ -54,5 +54,5 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 # Expose port 80 for Nginx
 EXPOSE 80
 
-# Start Nginx and PHP-FPM
-CMD service nginx start && php-fpm
+# Start both Nginx and PHP-FPM using supervisord
+CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
