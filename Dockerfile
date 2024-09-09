@@ -35,10 +35,10 @@ USER appuser
 # Copy the local code to the container
 COPY --chown=appuser:appuser . .
 
-# Ensure cache and storage paths exist, and set permissions
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chown -R appuser:appuser storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+# Ensure necessary paths exist, and set permissions
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/resources/views \
+    && chown -R appuser:appuser storage bootstrap/cache resources/views \
+    && chmod -R 775 storage bootstrap/cache resources/views
 
 # Install Laravel dependencies
 RUN composer install
