@@ -35,13 +35,18 @@ USER appuser
 # Copy the local code to the container
 COPY --chown=appuser:appuser . .
 
-# Ensure cache path and permissions are set
-RUN mkdir -p /var/www/html/bootstrap/cache \
+# Ensure cache and storage paths exist, and set permissions
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
     && chown -R appuser:appuser storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # Install Laravel dependencies
 RUN composer install
+
+# Optimize Laravel application
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
