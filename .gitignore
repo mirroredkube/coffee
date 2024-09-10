@@ -43,3 +43,4 @@ phpunit.xml.dist
 /storage/framework/sessions/*
 /storage/framework/testing/*
 /storage
+.vercel
